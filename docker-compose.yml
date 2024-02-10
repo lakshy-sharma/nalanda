@@ -6,6 +6,8 @@ services:
   frontend:
     image: "nalanda_frontend"
     build: ./frontend
+    env:
+      - "OPERATION_MODE=PROD"
     ports: 
       - "8080:80"
     depends_on:
@@ -15,6 +17,8 @@ services:
   backend:
     image: "nalanda_backend"
     build: ./backend
+    env:
+      - "OPERATION_MODE=PROD"
     depends_on:
       - database
 
