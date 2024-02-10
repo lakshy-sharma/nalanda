@@ -37,6 +37,11 @@ func ServerEntrypoint() {
 		ErrorLog: log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile),
 		Db:       dbConn,
 	}
+
+	// If operation mode is set to production dont show debug logs.
+	if os.Getenv("OPERATION_MODE") == "PROD" {
+		gin.SetMode(gin.ReleaseMode)
+	}
 	server := gin.Default()
 	server.SetTrustedProxies(nil)
 
