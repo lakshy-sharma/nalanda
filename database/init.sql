@@ -1,0 +1,2 @@
+CREATE DATABASE nalanda;
+GRANT ALL PRIVILEGES ON DATABASE nalanda TO postgres;

@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+
+  # The frontend for the library.
+  frontend:
+    image: "nalanda_frontend"
+    build: ./frontend
+    ports: 
+      - "8080:80"
+    depends_on:
+      - backend
+
+  # The backend built in go.
+  backend:
+    image: "nalanda_backend"
+    build: ./backend
+    depends_on:
+      - database
+
+  # The postgres database which stores the login data for nalanda.
+  database:
+    image: "nalanda_database"
+    build: ./database
+    ports:
+      - "5432:5432"
+    env_file:
+      - ./database/db.env
+    volumes:
+      - ./database/data:/var/lib/postgresql/data

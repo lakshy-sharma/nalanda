@@ -1,0 +1,12 @@
+[frontend]
+
+[backend]
+port = "8000"
+
+[database]
+host = "localhost"
+port = "5432"
+user="postgres"
+password="changeme123"
+database_name="nalanda"
+client_origin = "http://localhost:3000"
