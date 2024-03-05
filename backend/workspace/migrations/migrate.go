@@ -17,5 +17,6 @@ func main() {
 	db := initializers.ConnectDB(&appConfig)
 	// Perform the migrations to the database.
 	db.AutoMigrate(models.User{})
+	db.AutoMigrate(models.Token{})
 	log.Println("Migrations Completed.")
 }

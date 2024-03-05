@@ -3,13 +3,13 @@ package applicationbase
 import (
 	"fmt"
 	"log"
+	"nalanda_backend/controllers"
 	"nalanda_backend/initializers"
 	"nalanda_backend/middleware"
-	"net/http"
+	"nalanda_backend/models"
 	"os"
 
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
 
 // This struct contains the application most commonly shared data.
@@ -18,12 +18,12 @@ type NalandaApplication struct {
 	Config   initializers.AppConfig
 	InfoLog  *log.Logger
 	ErrorLog *log.Logger
-	Db       *gorm.DB
+	models   models.Models
 }
 
 // The entrypoint for the API server.
 func ServerEntrypoint() {
-	// Read the application configurations and create a database connection.
+	// Read the application config and create a database connection.
 	appConfig, err := initializers.LoadConfig(".", "nalanda", "toml")
 	if err != nil {
 		log.Fatal("Failed to load application settings: ", err)
@@ -35,7 +35,7 @@ func ServerEntrypoint() {
 		Config:   appConfig,
 		InfoLog:  log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime),
 		ErrorLog: log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile),
-		Db:       dbConn,
+		models:   models.New(dbConn),
 	}
 
 	// If operation mode is set to production dont show debug logs.
@@ -45,20 +45,13 @@ func ServerEntrypoint() {
 	server := gin.Default()
 	server.SetTrustedProxies(nil)
 
-	// Create a router to handle the various API routes.
-	routerV1 := server.Group("/api").Group("/v1")
-	routerV1.Use(middleware.BaseCorsSettings())
-
-	// Some basic handlers.
-	// TODO move them into controllers.
-	routerV1.GET("/health", func(ctx *gin.Context) {
-		message := "Welcome to Nalanda: The Open Library"
-		ctx.JSON(http.StatusOK, gin.H{"status": "success", "message": message})
-	})
-	routerV1.POST("/login", func(ctx *gin.Context) {
-		message := "Welcome to Nalanda: The Open Library"
-		ctx.JSON(http.StatusOK, gin.H{"status": "success", "message": message})
-	})
+	// This router handles the non authenticated API routes.
+	// The middleware we have created is used for handling the CORS.
+	noauthRouterV1 := server.Group("/api").Group("/v1")
+	noauthRouterV1.Use(middleware.BaseCorsSettings())
+	noauthRouterV1.GET("/", controllers.Index)
+	noauthRouterV1.GET("/health", controllers.Healthcheck)
+	noauthRouterV1.POST("/login", controllers.Index)
 
 	// Start our server and ensure to wrap it inside the error logger to capture any failures.
 	app.ErrorLog.Fatal(server.Run(fmt.Sprintf(":%s", app.Config.Backend.Port)))

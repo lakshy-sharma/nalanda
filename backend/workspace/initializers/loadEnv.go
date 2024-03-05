@@ -14,7 +14,11 @@ type AppConfig struct {
 type Frontend struct {
 }
 type Backend struct {
-	Port string `mapstructure:"port"`
+	Port                   string `mapstructure:"port"`
+	AccessTokenPrivateKey  string `mapstructure:"access_token_private_key"`
+	AccessTokenPublicKey   string `mapstructure:"access_token_public_key"`
+	RefreshTokenPrivateKey string `mapstructure:"refresh_token_private_key"`
+	RefreshTokenPublicKey  string `mapstructure:"refresh_token_public_key"`
 }
 type Database struct {
 	Host         string `mapstructure:"host"`

@@ -6,19 +6,41 @@ services:
   frontend:
     image: "nalanda_frontend"
     build: ./frontend
-    env:
+    environment:
       - "OPERATION_MODE=PROD"
     ports: 
       - "8080:80"
     depends_on:
       - backend
+    profiles:
+      - integrationTest
+      - completeDeployment
 
   # The backend built in go.
   backend:
     image: "nalanda_backend"
     build: ./backend
-    env:
+    restart: always
+    environment:
       - "OPERATION_MODE=PROD"
+    profiles:
+      - apiTest
+      - integrationTest
+      - completeDeployment
+    depends_on:
+      - database
+
+  # This container is used for performing the migrations required for the application.
+  db_migrations:
+    image: "nalanda_backend_migrations"
+    build: 
+      context: ./backend/
+      dockerfile: ./backend/migrations.Dockerfile
+    profiles:
+      - apiTest
+      - integrationTest
+      - completeDeployment
+    command: go run migrations/migrate.go
     depends_on:
       - database
 
@@ -30,5 +52,9 @@ services:
       - "5432:5432"
     env_file:
       - ./database/db.env
-    volumes:
-      - ./database/data:/var/lib/postgresql/data
+    profiles:
+      - apiTest
+      - integrationTest
+      - completeDeployment
+    #volumes:
+    #  - ./database/data:/var/lib/postgresql/data
