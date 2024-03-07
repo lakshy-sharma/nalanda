@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 	"nalanda_backend/initializers"
-	"nalanda_backend/models"
+	appModels "nalanda_backend/models"
 )
 
 // This is why we have a seperate main function for this subsystem.
@@ -16,7 +16,7 @@ func main() {
 	}
 	db := initializers.ConnectDB(&appConfig)
 	// Perform the migrations to the database.
-	db.AutoMigrate(models.User{})
-	db.AutoMigrate(models.Token{})
+	db.AutoMigrate(appModels.User{})
+	db.AutoMigrate(appModels.Token{})
 	log.Println("Migrations Completed.")
 }

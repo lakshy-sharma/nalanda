@@ -2,6 +2,7 @@ package initializers
 
 import (
 	"log"
+	"time"
 
 	"github.com/spf13/viper"
 )
@@ -14,11 +15,13 @@ type AppConfig struct {
 type Frontend struct {
 }
 type Backend struct {
-	Port                   string `mapstructure:"port"`
-	AccessTokenPrivateKey  string `mapstructure:"access_token_private_key"`
-	AccessTokenPublicKey   string `mapstructure:"access_token_public_key"`
-	RefreshTokenPrivateKey string `mapstructure:"refresh_token_private_key"`
-	RefreshTokenPublicKey  string `mapstructure:"refresh_token_public_key"`
+	Port                   string        `mapstructure:"port"`
+	AccessTokenPrivateKey  string        `mapstructure:"access_token_private_key"`
+	AccessTokenPublicKey   string        `mapstructure:"access_token_public_key"`
+	RefreshTokenPrivateKey string        `mapstructure:"refresh_token_private_key"`
+	RefreshTokenPublicKey  string        `mapstructure:"refresh_token_public_key"`
+	AccessTokenAge         time.Duration `mapstructure:"access_token_max_age_minutes"`
+	RefreshTokenAge        time.Duration `mapstructure:"refresh_token_max_age_minutes"`
 }
 type Database struct {
 	Host         string `mapstructure:"host"`

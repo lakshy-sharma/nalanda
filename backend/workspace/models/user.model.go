@@ -12,8 +12,7 @@ Model structures to be used for communicating with the API.
 type User struct {
 	gorm.Model
 	ID           uint   `gorm:"primary_key"`
-	FirstName    string `gorm:"type:varchar(255);not null"`
-	LastName     string `gorm:"type:varchar(255); not null"`
+	Name         string `gorm:"type:varchar(255);not null"`
 	Email        string `gorm:"uniqueIndex;not null"`
 	PasswordHash string `gorm:"not null"`
 	Role         string `gorm:"type:varchar(255);;not null"`
