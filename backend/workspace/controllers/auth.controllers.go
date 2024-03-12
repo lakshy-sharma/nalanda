@@ -43,20 +43,18 @@ func (ac *AuthController) UserSignUp(ctx *gin.Context) {
 		return
 	}
 
-	now := time.Now()
 	newUser := models.User{
-		Name:         payload.Name,
+		FirstName:    payload.FirstName,
+		LastName:     payload.LastName,
 		Email:        payload.Email,
 		PasswordHash: hashedPassword,
 		Role:         "user",
 		Verified:     true,
-		CreatedAt:    now,
-		UpdatedAt:    now,
 	}
 
-	result := ac.DB.Create(newUser)
+	result := ac.DB.Create(&newUser)
 	if result.Error != nil && strings.Contains(result.Error.Error(), "duplicate key value violates unique") {
-		ctx.JSON(http.StatusConflict, gin.H{"status": "fail", "message": "User with that mail alreayd exists"})
+		ctx.JSON(http.StatusConflict, gin.H{"status": "fail", "message": "User with that mail already exists"})
 	} else if result.Error != nil {
 		ctx.JSON(http.StatusBadGateway, gin.H{"status": "fail", "message": "Something went wrong"})
 	}

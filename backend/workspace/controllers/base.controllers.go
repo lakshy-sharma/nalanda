@@ -26,11 +26,11 @@ func NewBaseController(applicationConfig *initializers.AppConfig, dbConn *gorm.D
 }
 
 func (bc *BaseController) Healthcheck(ctx *gin.Context) {
-	message := "Welcome to Nalanda: An Open Society for Academics"
+	message := "Welcome to Nalanda: Nalanda: An Open Knowledge Center"
 	ctx.JSON(http.StatusOK, gin.H{"message": message})
 }
 
 func (bc *BaseController) Index(ctx *gin.Context) {
-	message := "Welcome to Nalanda: An Open Society for Academics"
+	message := "Welcome to Nalanda: Nalanda: An Open Knowledge Center"
 	ctx.JSON(http.StatusOK, gin.H{"message": message, "status": "success"})
 }
