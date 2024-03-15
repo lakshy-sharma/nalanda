@@ -14,8 +14,3 @@ func HashPassword(password string) (string, error) {
 	}
 	return string(hashedPassword), nil
 }
-
-// This function is used for verifying the password.
-func VerifyPassword(hashedPassword string, candidatePassword string) error {
-	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(candidatePassword))
-}

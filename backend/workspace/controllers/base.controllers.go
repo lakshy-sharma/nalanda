@@ -10,18 +10,18 @@ import (
 )
 
 type BaseController struct {
-	appConfig *initializers.AppConfig
-	InfoLog   *log.Logger
-	ErrorLog  *log.Logger
-	DB        *gorm.DB
+	appConfig   *initializers.AppConfig
+	DB          *gorm.DB
+	InfoLogger  *log.Logger
+	ErrorLogger *log.Logger
 }
 
 func NewBaseController(applicationConfig *initializers.AppConfig, dbConn *gorm.DB, infoLogger *log.Logger, errorLogger *log.Logger) BaseController {
 	return BaseController{
-		appConfig: applicationConfig,
-		DB:        dbConn,
-		InfoLog:   infoLogger,
-		ErrorLog:  errorLogger,
+		appConfig:   applicationConfig,
+		DB:          dbConn,
+		InfoLogger:  infoLogger,
+		ErrorLogger: errorLogger,
 	}
 }
 

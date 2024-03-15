@@ -1,6 +1,8 @@
 package models
 
 import (
+	"time"
+
 	"gorm.io/gorm"
 )
 
@@ -19,7 +21,7 @@ type User struct {
 }
 
 /*
-JSON structures to be used by the API.
+JSON Input structures to be used by the API.
 */
 type UserSignUpInput struct {
 	FirstName string `json:"first_name" binding:"required"`
@@ -28,7 +30,18 @@ type UserSignUpInput struct {
 	Password  string `json:"password" binding:"required"`
 }
 
-type UserLoginInput struct {
+type UserSignInInput struct {
 	Email    string `json:"email" binding:"required"`
 	Password string `json:"password" binding:"required"`
+}
+
+/*
+JSON Output structures to be used by the API.
+*/
+type UserDataResponse struct {
+	ID        uint      `json:"id"`
+	Email     string    `json:"email"`
+	Role      string    `json:"role,omitempty"`
+	CreatedAt time.Time `json:"created_at,omitempty"`
+	UpdatedAt time.Time `json:"updated_at,omitempty"`
 }

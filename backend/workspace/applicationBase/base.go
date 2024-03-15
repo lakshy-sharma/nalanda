@@ -62,6 +62,9 @@ func ServerEntrypoint() {
 	AuthRouteController.AuthRoutes(routerV1)
 
 	// Setup user routes.
+	UserController := controllers.NewUserController(app.appConfig, app.DB, app.InfoLog, app.ErrorLog)
+	UserRouteController := routes.NewUserRouteController(UserController, app.appConfig, app.DB, app.InfoLog, app.ErrorLog)
+	UserRouteController.UserRoutes(routerV1)
 
 	// Start our server and ensure to wrap it inside the error logger to capture any failures.
 	app.ErrorLog.Fatal(server.Run(fmt.Sprintf(":%s", app.appConfig.Backend.Port)))

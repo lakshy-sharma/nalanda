@@ -10,22 +10,23 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
 
 type AuthController struct {
-	appConfig *initializers.AppConfig
-	InfoLog   *log.Logger
-	ErrorLog  *log.Logger
-	DB        *gorm.DB
+	appConfig   *initializers.AppConfig
+	DB          *gorm.DB
+	InfoLogger  *log.Logger
+	ErrorLogger *log.Logger
 }
 
 func NewAuthController(applicationConfig *initializers.AppConfig, dbConn *gorm.DB, infoLogger *log.Logger, errorLogger *log.Logger) AuthController {
 	return AuthController{
-		appConfig: applicationConfig,
-		InfoLog:   infoLogger,
-		ErrorLog:  errorLogger,
-		DB:        dbConn,
+		appConfig:   applicationConfig,
+		DB:          dbConn,
+		InfoLogger:  infoLogger,
+		ErrorLogger: errorLogger,
 	}
 }
 
@@ -39,7 +40,7 @@ func (ac *AuthController) UserSignUp(ctx *gin.Context) {
 
 	hashedPassword, err := utils.HashPassword(payload.Password)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"status": "fail", "message": ""})
+		ctx.JSON(http.StatusBadRequest, gin.H{"status": "fail", "message": err.Error()})
 		return
 	}
 
@@ -64,20 +65,20 @@ func (ac *AuthController) UserSignUp(ctx *gin.Context) {
 
 func (ac *AuthController) UserSignIn(ctx *gin.Context) {
 	// Parse the input.
-	var payload models.UserLoginInput
-	if err := ctx.ShouldBindJSON(payload); err != nil {
+	var payload *models.UserSignInInput
+	if err := ctx.ShouldBindJSON(&payload); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"status": "fail", "message": err.Error()})
 		return
 	}
 
 	// Perform validation.
-	var user models.User
+	var user *models.User
 	result := ac.DB.First(&user, "email = ?", strings.ToLower(payload.Email))
 	if result.Error != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"status": "fail", "message": "Invalid Email or Password"})
 		return
 	}
-	if err := utils.VerifyPassword(user.PasswordHash, payload.Password); err != nil {
+	if err := bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(payload.Password)); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"status": "fail", "message": "Invalid Email or Password"})
 		return
 	}
