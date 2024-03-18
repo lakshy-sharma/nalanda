@@ -4,6 +4,7 @@ import (
 	"log"
 	"nalanda_backend/controllers"
 	"nalanda_backend/initializers"
+	"nalanda_backend/middleware"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
@@ -30,5 +31,8 @@ func NewUserRouteController(userController controllers.UserController, applicati
 func (ur *UserRouteController) UserRoutes(rg *gin.RouterGroup) {
 	router := rg.Group("/user")
 
-	router.POST("/me", ur.userController.GetUserData)
+	router.GET("/me", middleware.DeserializeUser(ur.appConfig, ur.DB, ur.InfoLogger, ur.ErrorLogger), ur.userController.GetUserData)
+	router.POST("/update_email", middleware.DeserializeUser(ur.appConfig, ur.DB, ur.InfoLogger, ur.ErrorLogger), ur.userController.UpdateUserEmail)
+	router.POST("/reset_password", middleware.DeserializeUser(ur.appConfig, ur.DB, ur.InfoLogger, ur.ErrorLogger), ur.userController.ResetUserPassword)
+	router.DELETE("/me", middleware.DeserializeUser(ur.appConfig, ur.DB, ur.InfoLogger, ur.ErrorLogger), ur.userController.DeleteUser)
 }

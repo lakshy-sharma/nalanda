@@ -16,6 +16,7 @@ type Frontend struct {
 }
 type Backend struct {
 	Port                   string        `mapstructure:"port"`
+	SoftDelete             bool          `mapstructure:"soft_delete"`
 	AccessTokenPrivateKey  string        `mapstructure:"access_token_private_key"`
 	AccessTokenPublicKey   string        `mapstructure:"access_token_public_key"`
 	RefreshTokenPrivateKey string        `mapstructure:"refresh_token_private_key"`

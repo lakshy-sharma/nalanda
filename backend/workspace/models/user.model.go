@@ -35,6 +35,15 @@ type UserSignInInput struct {
 	Password string `json:"password" binding:"required"`
 }
 
+type UserEmailUpdateInput struct {
+	NewEmail string `json:"new_email" binding:"required"`
+}
+
+type UserPasswordResetInput struct {
+	OldPassword string `json:"old_password" binding:"required"`
+	NewPassword string `json:"new_password" binding:"required"`
+}
+
 /*
 JSON Output structures to be used by the API.
 */

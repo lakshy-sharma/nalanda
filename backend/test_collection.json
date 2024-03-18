@@ -1,0 +1,208 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "Nalanda Backend",
+    "dateExported": "2024-03-18T03:09:50.064Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "46df1675-3cb0-4d93-8a3b-636b5457adcc",
+            "colId": "bb580dc1-e9f4-4185-bde8-ba1ae69b99dd",
+            "containerId": "",
+            "name": "/api/v1",
+            "url": "http://localhost:8000/api/v1",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-03-12T02:20:04.854Z",
+            "modified": "2024-03-12T02:20:04.854Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "cb90503f-f9b0-4d3a-afae-1dcd334aa231",
+            "colId": "bb580dc1-e9f4-4185-bde8-ba1ae69b99dd",
+            "containerId": "",
+            "name": "/api/v1/health",
+            "url": "http://localhost:8000/api/v1/health",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-03-12T02:22:21.648Z",
+            "modified": "2024-03-12T02:22:32.859Z",
+            "headers": [],
+            "params": [],
+            "reqType": "get",
+            "tests": []
+        },
+        {
+            "_id": "c3355b6a-3efa-4712-86a4-ccb30b195b7f",
+            "colId": "bb580dc1-e9f4-4185-bde8-ba1ae69b99dd",
+            "containerId": "",
+            "name": "/api/v1/auth/signup",
+            "url": "http://localhost:8000/api/v1/auth/signup",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2024-03-12T02:25:16.718Z",
+            "modified": "2024-03-12T16:45:33.268Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"first_name\": \"Lakshy\",\n  \"last_name\": \"Sharma\",\n  \"email\": \"lakshytest1@protonmail.com\",\n  \"password\": \"test123\"\n}",
+                "form": []
+            },
+            "reqType": "post",
+            "tests": []
+        },
+        {
+            "_id": "82125499-1b15-42c5-a429-951d7d1069e7",
+            "colId": "bb580dc1-e9f4-4185-bde8-ba1ae69b99dd",
+            "containerId": "",
+            "name": "/api/v1/auth/signin",
+            "url": "http://localhost:8000/api/v1/auth/signin",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2024-03-12T16:34:19.730Z",
+            "modified": "2024-03-12T16:45:43.932Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "isDisabled": true
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"lakshytest1@protonmail.com\",\n  \"password\": \"test123\"\n}",
+                "form": []
+            },
+            "reqType": "post",
+            "tests": []
+        },
+        {
+            "_id": "b031e818-87d6-4aab-a008-e5e31ef901d5",
+            "colId": "bb580dc1-e9f4-4185-bde8-ba1ae69b99dd",
+            "containerId": "",
+            "name": "/api/v1/user/me",
+            "url": "http://localhost:8000/api/v1/user/me",
+            "method": "GET",
+            "sortNum": 50000,
+            "created": "2024-03-17T10:09:56.163Z",
+            "modified": "2024-03-17T10:14:57.972Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "reqType": "post",
+            "tests": []
+        },
+        {
+            "_id": "57dea9a4-b65b-439f-ac5d-0b9218c462e6",
+            "colId": "bb580dc1-e9f4-4185-bde8-ba1ae69b99dd",
+            "containerId": "",
+            "name": "/api/v1/user/update_email",
+            "url": "http://localhost:8000/api/v1/user/update_email",
+            "method": "POST",
+            "sortNum": 55000,
+            "created": "2024-03-17T14:51:16.858Z",
+            "modified": "2024-03-18T03:05:49.090Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"new_email\": \"lakshytest2@gmail.com\"\n}",
+                "form": []
+            },
+            "reqType": "get",
+            "tests": []
+        },
+        {
+            "_id": "54d2ca49-2c32-41ed-8a38-c3a188e0423f",
+            "colId": "bb580dc1-e9f4-4185-bde8-ba1ae69b99dd",
+            "containerId": "",
+            "name": "/api/v1/user/reset_password",
+            "url": "http://localhost:8000/api/v1/user/reset_password",
+            "method": "POST",
+            "sortNum": 57500,
+            "created": "2024-03-17T15:48:10.001Z",
+            "modified": "2024-03-17T15:58:40.617Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"old_password\": \"test123\",\n  \"new_password\": \"test@1234\"\n}",
+                "form": []
+            },
+            "reqType": "post",
+            "tests": []
+        },
+        {
+            "_id": "9c2984e3-ae0e-4c46-89b4-1e9ab81370b7",
+            "colId": "bb580dc1-e9f4-4185-bde8-ba1ae69b99dd",
+            "containerId": "",
+            "name": "/api/v1/auth/signin",
+            "url": "http://localhost:8000/api/v1/auth/signin",
+            "method": "POST",
+            "sortNum": 58750,
+            "created": "2024-03-17T16:00:09.933Z",
+            "modified": "2024-03-18T03:08:19.353Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "isDisabled": true
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"lakshytest2@gmail.com\",\n  \"password\": \"test@1234\"\n}",
+                "form": []
+            },
+            "reqType": "post",
+            "tests": []
+        },
+        {
+            "_id": "17d67ad3-264a-49fd-b27a-1a744d82edbe",
+            "colId": "bb580dc1-e9f4-4185-bde8-ba1ae69b99dd",
+            "containerId": "",
+            "name": "/api/v1/user/me",
+            "url": "http://localhost:8000/api/v1/user/me",
+            "method": "DELETE",
+            "sortNum": 60000,
+            "created": "2024-03-17T14:02:50.538Z",
+            "modified": "2024-03-17T14:03:37.459Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "reqType": "post",
+            "tests": []
+        }
+    ],
+    "settings": {
+        "runOptions": {
+            "delay": 0,
+            "iterations": 1,
+            "stopOnFail": true,
+            "dataFilePath": ""
+        }
+    }
+}
