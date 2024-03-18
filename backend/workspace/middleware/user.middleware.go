@@ -15,6 +15,7 @@ import (
 
 func DeserializeUser(appConfig *initializers.AppConfig, dbConn *gorm.DB, infoLogger *log.Logger, errorLogger *log.Logger) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
+		// Fetch the access token from the cookies andthe auth header (Bearer field).
 		var accessToken string
 		cookie, err := ctx.Cookie("access_token")
 		authorizationHeader := ctx.Request.Header.Get("Authorization")
@@ -28,19 +29,23 @@ func DeserializeUser(appConfig *initializers.AppConfig, dbConn *gorm.DB, infoLog
 			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"status": "fail", "message": "You are not logged in"})
 			return
 		}
-		sub, err := utils.ValidateToken(accessToken, appConfig.Backend.AccessTokenPublicKey)
+
+		// Validate the token provided by the user.
+		userID, err := utils.ValidateToken(accessToken, appConfig.Backend.AccessTokenPublicKey)
 		if err != nil {
 			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"status": "fail", "message": err.Error()})
 			return
 		}
 
+		// Get the user whose token we have validated.
 		var user models.User
-		result := dbConn.First(&user, "id = ?", fmt.Sprint(sub))
+		result := dbConn.First(&user, "id = ?", fmt.Sprint(userID))
 		if result.Error != nil {
 			ctx.AbortWithStatusJSON(http.StatusForbidden, gin.H{"status": "fail", "message": "the user belonging to this token doesnt exists"})
 			return
 		}
 
+		// Set the user in the context to be used by our handlers.
 		ctx.Set("currentUser", user)
 		ctx.Next()
 	}

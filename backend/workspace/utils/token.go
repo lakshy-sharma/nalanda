@@ -8,7 +8,7 @@ import (
 	"github.com/golang-jwt/jwt"
 )
 
-func CreateToken(ttl time.Duration, payload interface{}, privateKey string) (string, error) {
+func CreateToken(ttl time.Duration, data interface{}, privateKey string) (string, error) {
 	decodedPrivateKey, err := base64.StdEncoding.DecodeString(privateKey)
 	if err != nil {
 		return "", fmt.Errorf("could not decode private key: %w", err)
@@ -20,7 +20,7 @@ func CreateToken(ttl time.Duration, payload interface{}, privateKey string) (str
 
 	now := time.Now().UTC()
 	claims := make(jwt.MapClaims)
-	claims["sub"] = payload
+	claims["sub"] = data
 	claims["exp"] = now.Add(ttl).Unix()
 	claims["iat"] = now.Unix()
 	claims["nbf"] = now.Unix()
