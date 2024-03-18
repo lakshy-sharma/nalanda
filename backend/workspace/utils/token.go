@@ -58,3 +58,7 @@ func ValidateToken(token string, publicKey string) (interface{}, error) {
 	}
 	return claims["sub"], nil
 }
+
+func RefreshToken() {
+
+}

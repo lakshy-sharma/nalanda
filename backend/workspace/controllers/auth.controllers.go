@@ -84,7 +84,7 @@ func (ac *AuthController) UserSignIn(ctx *gin.Context) {
 	}
 
 	// Generate tokens for the user.
-	accessToken, err := utils.CreateToken(ac.appConfig.Backend.AccessTokenAge, user.ID, ac.appConfig.Backend.AccessTokenPrivateKey)
+	accessToken, err := utils.CreateToken(ac.appConfig.Backend.AccessTokenAge*time.Minute, user.ID, ac.appConfig.Backend.AccessTokenPrivateKey)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"status": "fail", "message": err.Error()})
 		return

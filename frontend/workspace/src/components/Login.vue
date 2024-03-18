@@ -29,13 +29,17 @@
 <script>
 import FormBase from "./forms/FormBase.vue";
 import TextInput from "./forms/TextInput.vue";
+import store from "./store.js";
+import router from "./../router/index.js";
+import Toastify from 'toastify-js'
 
 export default {
     name: "login",
     data() {
         return {
             email: "",
-            password: ""
+            password: "",
+            store,
         }
     },
     methods: {
@@ -48,14 +52,20 @@ export default {
             const requestOptions = {
                 method: "POST",
                 body: JSON.stringify(payload)
-            } 
-            fetch("http://localhost:8000/api/v1/login", requestOptions)
+            }
+            fetch("http://localhost:8000/api/v1/auth/signin", requestOptions)
             .then((response) => response.json())
-            .then((data) => {
-                if (data.error) {
-                    console.log("Error: ", data.message);
+            .then((response) => {
+                if (response.status === "fail") {
+                    console.log("Failure: ", response.message);
+                    Toastify({
+                        text: "Login Failed",
+                        duration: 1000,
+                        close: true
+                    }).showToast();
                 } else {
-                    console.log("Everything is fine.");
+                    store.token = response.access_token;
+                    router.push("/")
                 }
             })
         }

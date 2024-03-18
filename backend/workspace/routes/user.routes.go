@@ -31,8 +31,8 @@ func NewUserRouteController(userController controllers.UserController, applicati
 func (ur *UserRouteController) UserRoutes(rg *gin.RouterGroup) {
 	router := rg.Group("/user")
 
-	router.GET("/me", middleware.DeserializeUser(ur.appConfig, ur.DB, ur.InfoLogger, ur.ErrorLogger), ur.userController.GetUserData)
-	router.POST("/update_email", middleware.DeserializeUser(ur.appConfig, ur.DB, ur.InfoLogger, ur.ErrorLogger), ur.userController.UpdateUserEmail)
-	router.POST("/reset_password", middleware.DeserializeUser(ur.appConfig, ur.DB, ur.InfoLogger, ur.ErrorLogger), ur.userController.ResetUserPassword)
-	router.DELETE("/me", middleware.DeserializeUser(ur.appConfig, ur.DB, ur.InfoLogger, ur.ErrorLogger), ur.userController.DeleteUser)
+	router.GET("/me", middleware.AuthenticateUser(ur.appConfig, ur.DB, ur.InfoLogger, ur.ErrorLogger), ur.userController.GetUserData)
+	router.POST("/update_email", middleware.AuthenticateUser(ur.appConfig, ur.DB, ur.InfoLogger, ur.ErrorLogger), ur.userController.UpdateUserEmail)
+	router.POST("/reset_password", middleware.AuthenticateUser(ur.appConfig, ur.DB, ur.InfoLogger, ur.ErrorLogger), ur.userController.ResetUserPassword)
+	router.DELETE("/me", middleware.AuthenticateUser(ur.appConfig, ur.DB, ur.InfoLogger, ur.ErrorLogger), ur.userController.DeleteUser)
 }

@@ -13,7 +13,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func DeserializeUser(appConfig *initializers.AppConfig, dbConn *gorm.DB, infoLogger *log.Logger, errorLogger *log.Logger) gin.HandlerFunc {
+func AuthenticateUser(appConfig *initializers.AppConfig, dbConn *gorm.DB, infoLogger *log.Logger, errorLogger *log.Logger) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		// Fetch the access token from the cookies andthe auth header (Bearer field).
 		var accessToken string
@@ -38,6 +38,7 @@ func DeserializeUser(appConfig *initializers.AppConfig, dbConn *gorm.DB, infoLog
 		}
 
 		// Get the user whose token we have validated.
+		// Note: Soft deleted records are ignored automatically.
 		var user models.User
 		result := dbConn.First(&user, "id = ?", fmt.Sprint(userID))
 		if result.Error != nil {

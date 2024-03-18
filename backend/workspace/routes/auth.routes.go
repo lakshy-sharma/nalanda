@@ -33,5 +33,5 @@ func (ar *AuthRouteController) AuthRoutes(rg *gin.RouterGroup) {
 
 	router.POST("/signup", ar.authController.UserSignUp)
 	router.POST("/signin", ar.authController.UserSignIn)
-	router.GET("/logout", middleware.DeserializeUser(ar.appConfig, ar.DB, ar.InfoLogger, ar.ErrorLogger), ar.authController.LogoutUser)
+	router.GET("/logout", middleware.AuthenticateUser(ar.appConfig, ar.DB, ar.InfoLogger, ar.ErrorLogger), ar.authController.LogoutUser)
 }
