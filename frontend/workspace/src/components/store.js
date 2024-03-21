@@ -1,7 +1,8 @@
 import {reactive} from "vue"
 
 const store = reactive({
-    token: ""
+    token: "",
+    user: {}
 })
 
 export default store;

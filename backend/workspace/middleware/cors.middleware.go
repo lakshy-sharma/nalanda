@@ -12,6 +12,9 @@ func BaseCorsSettings() gin.HandlerFunc {
 		AllowHeaders:     []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
 		ExposeHeaders:    []string{"Link"},
 		AllowCredentials: true,
-		MaxAge:           300,
+		AllowOriginFunc: func(origin string) bool {
+			return origin == "http://localhost:5173"
+		},
+		MaxAge: 300,
 	})
 }

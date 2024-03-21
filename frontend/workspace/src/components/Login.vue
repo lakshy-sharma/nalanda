@@ -65,7 +65,15 @@ export default {
                     }).showToast();
                 } else {
                     store.token = response.access_token;
+                    store.user = {
+                        id: response.user.id,
+                        first_name: response.user.first_name
+                    }
+                    let expiryDays = 1;
+                    document.cookie = `logged_in=true; max-age=${(expiryDays * 24 * 60 * 60 * 1000)}`
+                    document.cookie = `access_token=${JSON.stringify(response.access_token)}; max-age=${(expiryDays * 24 * 60 * 60 * 1000)}`
                     router.push("/")
+                    console.log("Login Complete")
                 }
             })
         }
