@@ -31,7 +31,8 @@ import FormBase from "./forms/FormBase.vue";
 import TextInput from "./forms/TextInput.vue";
 import store from "./store.js";
 import router from "./../router/index.js";
-import Toastify from 'toastify-js'
+import Toastify from 'toastify-js';
+import Security from "./security";
 
 export default {
     name: "login",
@@ -44,16 +45,11 @@ export default {
     },
     methods: {
         submitHandler() {
-            console.log("Submission made.");
             const payload = {
                 email: this.email,
                 password: this.password
             }
-            const requestOptions = {
-                method: "POST",
-                body: JSON.stringify(payload)
-            }
-            fetch("http://localhost:8000/api/v1/auth/signin", requestOptions)
+            fetch(process.env.BACKEND_SERVER + "/api/v1/auth/signin", Security.requestOptions(payload))
             .then((response) => response.json())
             .then((response) => {
                 if (response.status === "fail") {
