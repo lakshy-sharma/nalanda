@@ -18,7 +18,6 @@ func NewBaseRouteController(baseController controllers.BaseController, applicati
 }
 
 func (br *BaseRouteController) BaseRoutes(rg *gin.RouterGroup) {
-	router := rg
-	router.GET("/", br.BaseController.Index)
-	router.GET("/health", br.BaseController.Healthcheck)
+	rg.GET("/", br.BaseController.Index)
+	rg.GET("/health", br.BaseController.Healthcheck)
 }
