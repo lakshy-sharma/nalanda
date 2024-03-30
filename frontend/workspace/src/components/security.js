@@ -1,4 +1,4 @@
-import {store} from "./store,js"
+import store from "./store.js"
 import router from "./../router/index.js"
 
 let Security = {

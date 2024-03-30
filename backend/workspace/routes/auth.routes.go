@@ -33,6 +33,7 @@ func (ar *AuthRouteController) AuthRoutes(rg *gin.RouterGroup) {
 
 	router.POST("/signup", ar.authController.UserSignUp)
 	router.POST("/signin", ar.authController.UserSignIn)
-	router.GET("/logout", middleware.AuthenticateUser(ar.appConfig, ar.DB, ar.InfoLogger, ar.ErrorLogger), ar.authController.LogoutUser)
-	router.OPTIONS("/logout", middleware.AuthenticateUser(ar.appConfig, ar.DB, ar.InfoLogger, ar.ErrorLogger), ar.authController.LogoutUser)
+	router.OPTIONS("/signin", ar.authController.UserSignIn)
+	router.POST("/logout", middleware.AuthenticateUser(ar.appConfig, ar.DB, ar.InfoLogger, ar.ErrorLogger), ar.authController.LogoutUser)
+	router.OPTIONS("/logout", middleware.AuthenticateUser(ar.appConfig, ar.DB, ar.InfoLogger, ar.ErrorLogger))
 }

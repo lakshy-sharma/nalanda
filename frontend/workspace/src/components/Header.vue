@@ -3,7 +3,7 @@
         <header class="container text-center">
             <h1 class="text-4xl font-medium">Nalanda</h1>
             <p>
-                <i>The Open Library</i><br />
+                <i>The Open Research Center</i><br />
             </p>
         </header>
         <ul class="container md:mx-auto p-6 items-center justify-center md:flex">
@@ -64,7 +64,6 @@ import { ChevronDownIcon } from '@heroicons/vue/20/solid'
 <script>
 import store from "./store.js"
 import router from "./../router/index.js"
-import Security from './security';
 
 export default {
     data() {
@@ -75,23 +74,27 @@ export default {
     methods: {
         logout() {
             const requestOptions = {
-                method: "GET",
+                method: "POST",
                 headers: new Headers({
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${store.token}`,
                 })
             }
-            fetch(process.env.BACKEND_SERVER + "/api/v1/auth/logout", requestOptions)
+            fetch(import.meta.env.VITE_BACKEND_SERVER + "/api/v1/auth/logout", requestOptions)
             .then((response) => response.json())
             .then((response) => {
-                if (response.status === "success") {
-                    store.token = ""
-                    store.user = {}
-                    document.cookie = `logged_in=false; max-age=100`
-                    document.cookie = `access_token=-1; max-age=100`
-                    console.log("Logout Completed")
+                if (response) {
+                    if (response.status === "success") {
+                        store.token = ""
+                        store.user = {}
+                        document.cookie = `logged_in=false; max-age=100`
+                        document.cookie = `access_token=-1; max-age=100`
+                        console.log("Logout Completed");
+                    } else {
+                        console.log(response.message);
+                    }
                 } else {
-                    console.log(response.message);
+                    console.log(`Bad Response: ${response}`);
                 }
             })
             router.push("/")

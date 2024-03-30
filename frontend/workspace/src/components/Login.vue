@@ -49,7 +49,7 @@ export default {
                 email: this.email,
                 password: this.password
             }
-            fetch(process.env.BACKEND_SERVER + "/api/v1/auth/signin", Security.requestOptions(payload))
+            fetch(import.meta.env.VITE_BACKEND_SERVER + "/api/v1/auth/signin", Security.requestOptions(payload))
             .then((response) => response.json())
             .then((response) => {
                 if (response.status === "fail") {
