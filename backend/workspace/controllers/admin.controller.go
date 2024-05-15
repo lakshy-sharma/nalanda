@@ -29,10 +29,10 @@ func NewAdminController(applicationConfig *initializers.AppConfig, dbConn *gorm.
 func (adc *AdminController) GetAllUsers(ctx *gin.Context) {
 	var users []models.User
 	// Fetch a list of all users using GORM.
-	result := adc.DB.Find(&users)
+	result := adc.DB.Select([]string{"first_name", "last_name", "email", "role", "verified"}).Find(&users)
 	if result.Error != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"status": "fail", "message": "Failed to fetch all users."})
 		return
 	}
-	ctx.JSON(http.StatusOK, gin.H{"status": "success", "users": users})
+	ctx.JSON(http.StatusOK, gin.H{"status": "success", "data": gin.H{"users": users}})
 }

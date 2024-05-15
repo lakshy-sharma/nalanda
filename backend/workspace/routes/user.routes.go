@@ -34,6 +34,5 @@ func (ur *UserRouteController) UserRoutes(rg *gin.RouterGroup) {
 
 	router.GET("/me", ur.userController.GetUserData)
 	router.DELETE("/me", ur.userController.DeleteUser)
-	router.POST("/update_email", ur.userController.UpdateUserEmail)
-	router.POST("/update_password", ur.userController.ResetUserPassword)
+	router.POST("/update", ur.userController.UpdateUser)
 }

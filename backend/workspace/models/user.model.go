@@ -35,13 +35,11 @@ type UserSignInInput struct {
 	Password string `json:"password" binding:"required"`
 }
 
-type UserEmailUpdateInput struct {
-	NewEmail string `json:"new_email" binding:"required"`
-}
-
-type UserPasswordResetInput struct {
-	OldPassword string `json:"old_password" binding:"required"`
-	NewPassword string `json:"new_password" binding:"required"`
+type UserUpdateInput struct {
+	FirstName string `json:"first_name" binding:"required"`
+	LastName  string `json:"last_name" binding:"required"`
+	Email     string `json:"email" binding:"required"`
+	Password  string `json:"password" binding:"required"`
 }
 
 /*

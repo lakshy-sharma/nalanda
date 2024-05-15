@@ -33,5 +33,8 @@ func (adr *AdminRoutesController) AdminRoutes(rg *gin.RouterGroup) {
 	router := rg.Group("/admin")
 	router.Use(middleware.AuthenticateUser(adr.appConfig, adr.DB, adr.InfoLogger, adr.ErrorLogger))
 
-	router.GET("/all_users", adr.adminController.GetAllUsers)
+	router.GET("/users", adr.adminController.GetAllUsers)
+
+	// Options handlers with dummy data for CORS.
+	router.OPTIONS("/users")
 }

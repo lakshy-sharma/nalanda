@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"log"
 	"nalanda_backend/initializers"
 	"nalanda_backend/models"
@@ -40,14 +41,23 @@ func (uc *UserController) GetUserData(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{"status": "success", "data": gin.H{"user": userResponse}})
 }
 
-func (uc *UserController) UpdateUserEmail(ctx *gin.Context) {
-	var payload *models.UserEmailUpdateInput
+func (uc *UserController) UpdateUser(ctx *gin.Context) {
+	var payload *models.UserUpdateInput
+	var err error
 	currentUser := ctx.MustGet("currentUser").(models.User)
 	if err := ctx.ShouldBindJSON(&payload); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"status": "fail", "message": err.Error()})
 		return
 	}
-	currentUser.Email = payload.NewEmail
+
+	currentUser.Email = payload.Email
+	currentUser.FirstName = payload.FirstName
+	currentUser.LastName = payload.LastName
+	currentUser.PasswordHash, err = utils.HashPassword(payload.Password)
+	if err != nil {
+		ctx.JSon
+		fmt.Println("")
+	}
 	uc.DB.Save(&currentUser)
 	ctx.JSON(http.StatusOK, gin.H{"status": "success", "action": "Update", "message": "Updated User Email"})
 }

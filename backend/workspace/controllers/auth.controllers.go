@@ -99,7 +99,7 @@ func (ac *AuthController) UserSignIn(ctx *gin.Context) {
 	ctx.SetCookie("access_token", accessToken, int(ac.appConfig.Backend.AccessTokenAge*time.Duration(60*time.Second)), "/", "localhost", false, true)
 	ctx.SetCookie("refresh_token", refresh_token, int(ac.appConfig.Backend.RefreshTokenAge*time.Duration(60*time.Second)), "/", "localhost", false, true)
 	ctx.SetCookie("logged_in", "true", int(ac.appConfig.Backend.AccessTokenAge*time.Duration(60*time.Second)), "/", "localhost", false, false)
-	ctx.JSON(http.StatusOK, gin.H{"status": "success", "access_token": accessToken, "user": gin.H{"id": user.ID, "first_name": user.FirstName}})
+	ctx.JSON(http.StatusOK, gin.H{"status": "success", "data": gin.H{"access_token": accessToken, "user": gin.H{"id": user.ID, "first_name": user.FirstName}}})
 }
 
 func (ac *AuthController) LogoutUser(ctx *gin.Context) {
